@@ -318,7 +318,7 @@
                             <input type="checkbox" id="remember" name="remember">
                             <span>30天内免登录</span>
                         </label>
-                        <a href="#" class="forgot-link">忘记密码？</a>
+                        <a href="#" onclick="showForgotPassword(); return false;" class="forgot-link">忘记密码？</a>
                     </div>
                     
                     <button type="submit" class="btn-submit">🚀 登 录</button>
@@ -416,6 +416,18 @@
                 setTimeout(() => {
                     alert.style.display = 'none';
                 }, 4000);
+            }
+            
+            // 忘记密码功能
+            function showForgotPassword() {
+                const alert = document.getElementById('alertMessage');
+                alert.innerHTML = '🔐 <strong>忘记密码？</strong><br><br>这是一个演示系统，密码无法重置。<br><br>演示账号：<code>admin</code> / <code>admin123</code>';
+                alert.className = 'alert alert-success';
+                alert.style.display = 'block';
+                
+                setTimeout(() => {
+                    alert.style.display = 'none';
+                }, 8000);
             }
         });
     </script>
