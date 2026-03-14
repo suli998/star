@@ -496,6 +496,7 @@
         
         <!-- 主内容区 -->
         <main class="main-content">
+        <div id="dashboard" class="main-section" style="display:block;">
             <div class="header">
                 <h1 class="page-title">📊 数据看板</h1>
                 <div class="action-buttons">
@@ -568,16 +569,88 @@
             
             <!-- 系统信息 -->
             <div style="margin-top: 40px; padding: 20px; background: #f8f9fa; border-radius: 10px; font-size: 0.9em; color: #666;">
-                <strong>系统说明：</strong> 这是一个模拟后台管理系统，数据存储在浏览器本地。真实系统需要后端API支持。
-                <br>
-                <strong>演示功能：</strong> 登录/注册、数据可视化、收入追踪、模拟图表。
-                <br>
-                <strong>技术栈：</strong> HTML5 + CSS3 + JavaScript (localStorage)
+                <strong>系统说明：</strong> 这是一个模拟后台管理系统
             </div>
-        </main>
+        </div>
+        
+        <!-- 收入管理页面 -->
+        <div id="income" class="main-section" style="display:none;">
+            <div class="header">
+                <h1 class="page-title">💰 收入管理</h1>
+                <div><button class="btn btn-primary" onclick="alert('添加收入功能')">+ 添加收入</button></div>
+            </div>
+            <div class="income-table">
+                <h2 class="section-title">所有收入记录</h2>
+                <table><thead><tr><th>日期</th><th>渠道</th><th>金额</th><th>状态</th><th>操作</th></tr></thead>
+                <tbody id="incomeList"><tr><td colspan="5" style="text-align:center;padding:40px;">暂无记录</td></tr></tbody></table>
+            </div>
+        </div>
+        
+        <!-- 项目管理页面 -->
+        <div id="projects" class="main-section" style="display:none;">
+            <div class="header">
+                <h1 class="page-title">🚀 项目管理</h1>
+                <div><button class="btn btn-primary" onclick="alert('添加项目功能')">+ 添加项目</button></div>
+            </div>
+            <div class="stats-cards">
+                <div class="stat-card"><div class="stat-icon icon-income">📦</div><div class="stat-value">DataCleaner Pro</div><div class="stat-label">数据清洗工具</div><div class="stat-change change-positive">开发中</div></div>
+                <div class="stat-card"><div class="stat-icon icon-target">🌐</div><div class="stat-value">AI API</div><div class="stat-label">文本处理服务</div><div class="stat-change">部署完成</div></div>
+                <div class="stat-card"><div class="stat-icon icon-days">📝</div><div class="stat-value">技术博客</div><div class="stat-label">内容创作</div><div class="stat-change change-positive">运行中</div></div>
+            </div>
+        </div>
+        
+        <!-- 数据分析页面 -->
+        <div id="analytics" class="main-section" style="display:none;">
+            <div class="header">
+                <h1 class="page-title">📈 数据分析</h1>
+                <div><button class="btn btn-primary" onclick="alert('导出分析报告')">导出报告</button></div>
+            </div>
+            <div class="chart-section">
+                <h2 class="section-title">用户增长趋势</h2>
+                <p style="color:#666;padding:20px;">用户数据分析功能开发中...</p>
+            </div>
+            <div class="chart-section">
+                <h2 class="section-title">收入渠道分析</h2>
+                <p style="color:#666;padding:20px;">收入渠道分析功能开发中...</p>
+            </div>
+        </div>
+        
+        <!-- 系统设置页面 -->
+        <div id="settings" class="main-section" style="display:none;">
+            <div class="header">
+                <h1 class="page-title">⚙️ 系统设置</h1>
+            </div>
+            <div style="background:white;border-radius:12px;padding:30px;box-shadow:0 5px 15px rgba(0,0,0,0.05);">
+                <h2 class="section-title">账户设置</h2>
+                <div style="padding:20px 0;border-bottom:1px solid #eee;"><strong>用户名：</strong> <span id="settingsUsername">管理员</span></div>
+                <div style="padding:20px 0;border-bottom:1px solid #eee;"><strong>邮箱：</strong> <span>未设置</span></div>
+                <div style="padding:20px 0;border-bottom:1px solid #eee;"><strong>注册时间：</strong> <span>2026-03-14</span></div>
+                <div style="padding:20px 0;"><button class="btn btn-secondary" onclick="alert('修改密码功能')">修改密码</button></div>
+            </div>
+            <div style="background:white;border-radius:12px;padding:30px;box-shadow:0 5px 15px rgba(0,0,0,0.05);margin-top:20px;">
+                <h2 class="section-title">系统信息</h2>
+                <div style="padding:20px 0;border-bottom:1px solid #eee;"><strong>版本：</strong> v1.0.0</div>
+                <div style="padding:20px 0;border-bottom:1px solid #eee;"><strong>最后更新：</strong> 2026-03-14</div>
+                <div style="padding:20px 0;"><strong>状态：</strong> 运行正常</div>
+            </div>
+        </div>
+    </main>
     </div>
 
     <script>
+        // 导航功能
+        function showSection(sectionId) {
+            document.querySelectorAll('.main-section').forEach(sec => sec.style.display = 'none');
+            document.getElementById(sectionId).style.display = 'block';
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+            document.querySelector('a[href="#' + sectionId + '"]').classList.add('active');
+            const titles = {'dashboard':'📊 数据看板','income':'💰 收入管理','projects':'🚀 项目管理','analytics':'📈 数据分析','settings':'⚙️ 系统设置'};
+            document.querySelector('.page-title').textContent = titles[sectionId];
+        }
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) { e.preventDefault(); showSection(this.getAttribute('href').substring(1)); });
+        });
+        
         // 初始化数据
         document.addEventListener('DOMContentLoaded', function() {
             // 检查登录状态
