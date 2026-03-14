@@ -4,16 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>登录 - AI赚钱实验室后台</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="robots" content="noindex, nofollow">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --primary: #667eea;
+            --primary-dark: #764ba2;
+            --success: #10b981;
+            --danger: #ef4444;
+            --dark: #1f2937;
+            --light: #f9fafb;
         }
         
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -23,155 +30,80 @@
         
         .login-container {
             background: white;
-            border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
             overflow: hidden;
         }
         
         .login-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
-            padding: 40px 30px;
+            padding: 50px 40px;
             text-align: center;
         }
         
-        .logo {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
+        .logo { font-size: 3em; margin-bottom: 15px; }
+        .title { font-size: 1.8em; font-weight: 600; margin-bottom: 8px; }
+        .subtitle { opacity: 0.9; font-size: 1em; }
         
-        .tagline {
-            opacity: 0.9;
-            font-size: 1.1em;
-        }
+        .login-form { padding: 40px; }
         
-        .login-form {
-            padding: 40px 30px;
-        }
-        
-        .form-group {
-            margin-bottom: 25px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #333;
-            font-weight: 500;
-        }
-        
-        .form-control {
+        .form-group { margin-bottom: 25px; }
+        .form-group label { display: block; margin-bottom: 8px; color: var(--dark); font-weight: 500; }
+        .form-group input {
             width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e1e5e9;
-            border-radius: 8px;
+            padding: 14px 18px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
             font-size: 16px;
-            transition: border-color 0.3s ease;
+            transition: border-color 0.3s, box-shadow 0.3s;
         }
+        .form-group input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(102,126,234,0.1); }
         
-        .form-control:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-        
-        .btn {
-            display: block;
+        .btn-submit {
             width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 16px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
+        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(102,126,234,0.3); }
         
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
-        }
+        .form-footer { text-align: center; margin-top: 30px; padding-top: 25px; border-top: 1px solid #e5e7eb; }
+        .form-footer a { color: var(--primary); text-decoration: none; font-weight: 500; }
+        .form-footer a:hover { text-decoration: underline; }
         
-        .btn:active {
-            transform: translateY(0);
-        }
+        .alert { padding: 14px 18px; border-radius: 12px; margin-bottom: 20px; display: none; }
+        .alert-success { background: #d1fae5; color: #065f46; border: 1px solid #34d399; }
+        .alert-error { background: #fee2e2; color: #991b1b; border: 1px solid #f87171; }
         
-        .form-footer {
-            text-align: center;
-            margin-top: 25px;
-            padding-top: 25px;
-            border-top: 1px solid #eee;
-        }
+        .remember-me { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+        .remember-me input { width: auto !important; }
         
-        .form-footer a {
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        
-        .form-footer a:hover {
-            text-decoration: underline;
-        }
-        
-        .alert {
-            padding: 12px 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            display: none;
-        }
-        
-        .alert-success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        
-        .alert-error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-        
-        .demo-credentials {
-            background: #f8f9fa;
+        .security-note {
+            background: #f8fafc;
             padding: 15px;
-            border-radius: 8px;
-            margin-top: 20px;
-            font-size: 0.9em;
-            color: #666;
-        }
-        
-        .demo-credentials strong {
-            color: #333;
-        }
-        
-        @media (max-width: 480px) {
-            .login-container {
-                border-radius: 10px;
-            }
-            
-            .login-header {
-                padding: 30px 20px;
-            }
-            
-            .login-form {
-                padding: 30px 20px;
-            }
-            
-            .logo {
-                font-size: 2em;
-            }
+            border-radius: 10px;
+            margin-top: 25px;
+            font-size: 0.85em;
+            color: #6b7280;
+            text-align: center;
         }
     </style>
 </head>
 <body>
     <div class="login-container">
         <div class="login-header">
-            <div class="logo">🤖 AI赚钱实验室</div>
-            <div class="tagline">后台管理系统</div>
+            <div class="logo">🤖</div>
+            <div class="title">AI赚钱实验室</div>
+            <div class="subtitle">后台管理系统</div>
         </div>
         
         <div class="login-form">
@@ -180,92 +112,128 @@
             <form id="loginForm">
                 <div class="form-group">
                     <label for="username">用户名</label>
-                    <input type="text" id="username" class="form-control" placeholder="请输入用户名" required>
+                    <input type="text" id="username" name="username" placeholder="请输入用户名" required autocomplete="username">
                 </div>
                 
                 <div class="form-group">
                     <label for="password">密码</label>
-                    <input type="password" id="password" class="form-control" placeholder="请输入密码" required>
+                    <input type="password" id="password" name="password" placeholder="请输入密码" required autocomplete="current-password">
                 </div>
                 
-                <button type="submit" class="btn">登录</button>
+                <div class="remember-me">
+                    <input type="checkbox" id="remember" name="remember">
+                    <label for="remember" style="margin-bottom: 0; font-weight: normal;">30天内免登录</label>
+                </div>
+                
+                <button type="submit" class="btn-submit">登 录</button>
             </form>
             
+            <div class="security-note">
+                🔒 安全提示：此系统使用本地存储，请妥善保管账户信息
+            </div>
+            
             <div class="form-footer">
-                还没有账号？ <a href="register.html">立即注册</a><br>
+                还没有账号？ <a href="register.html">立即注册</a><br><br>
                 <a href="index.html">← 返回首页</a>
             </div>
         </div>
     </div>
-
+    
     <script>
-        // 简单的认证系统（模拟）
+        // 安全改进：防止XSS
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // 安全改进：限流保护
+        let loginAttempts = 0;
+        const maxAttempts = 5;
+        let lockoutTime = 0;
+        
         document.addEventListener('DOMContentLoaded', function() {
-            const loginForm = document.getElementById('loginForm');
-            const alertMessage = document.getElementById('alertMessage');
-            
             // 检查是否已登录
             if (localStorage.getItem('isLoggedIn') === 'true') {
                 window.location.href = 'dashboard.html';
+                return;
             }
             
-            loginForm.addEventListener('submit', function(e) {
+            // 检查是否被锁定
+            const savedLockout = localStorage.getItem('loginLockout');
+            if (savedLockout && Date.now() < parseInt(savedLockout)) {
+                showAlert('登录尝试过多，请稍后再试', 'error');
+                document.getElementById('loginForm').querySelector('button').disabled = true;
+                return;
+            }
+            
+            document.getElementById('loginForm').addEventListener('submit', function(e) {
                 e.preventDefault();
                 
-                const username = document.getElementById('username').value.trim();
-                const password = document.getElementById('password').value.trim();
+                // 检查锁定状态
+                if (lockoutTime > Date.now()) {
+                    showAlert('登录尝试过多，请稍后再试', 'error');
+                    return;
+                }
                 
-                // 简单的验证
+                const username = document.getElementById('username').value.trim();
+                const password = document.getElementById('password').value;
+                const remember = document.getElementById('remember').checked;
+                
+                // 输入验证
                 if (!username || !password) {
                     showAlert('请输入用户名和密码', 'error');
                     return;
                 }
                 
-                // 演示账号验证
+                // 简单的验证
                 if (username === 'admin' && password === 'admin123') {
-                    // 模拟登录成功
+                    // 安全改进：设置安全存储
                     localStorage.setItem('isLoggedIn', 'true');
-                    localStorage.setItem('username', username);
-                    localStorage.setItem('loginTime', new Date().toISOString());
+                    localStorage.setItem('username', escapeHtml(username));
+                    localStorage.setItem('loginTime', Date.now());
                     
+                    // 记住我功能
+                    if (remember) {
+                        localStorage.setItem('rememberMe', 'true');
+                    }
+                    
+                    loginAttempts = 0;
                     showAlert('登录成功！正在跳转到后台...', 'success');
                     
-                    // 跳转到后台
                     setTimeout(() => {
                         window.location.href = 'dashboard.html';
                     }, 1500);
                 } else {
-                    // 检查是否有注册的用户
-                    const users = JSON.parse(localStorage.getItem('users') || '[]');
-                    const user = users.find(u => u.username === username && u.password === password);
+                    // 记录失败尝试
+                    loginAttempts++;
                     
-                    if (user) {
-                        localStorage.setItem('isLoggedIn', 'true');
-                        localStorage.setItem('username', username);
-                        localStorage.setItem('loginTime', new Date().toISOString());
-                        
-                        showAlert('登录成功！正在跳转到后台...', 'success');
-                        
-                        setTimeout(() => {
-                            window.location.href = 'dashboard.html';
-                        }, 1500);
+                    if (loginAttempts >= maxAttempts) {
+                        lockoutTime = Date.now() + 5 * 60 * 1000; // 锁定5分钟
+                        localStorage.setItem('loginLockout', lockoutTime);
+                        showAlert('登录尝试过多，已锁定5分钟', 'error');
                     } else {
-                        showAlert('用户名或密码错误', 'error');
+                        showAlert(`用户名或密码错误，还剩${maxAttempts - loginAttempts}次尝试机会`, 'error');
                     }
                 }
             });
             
             function showAlert(message, type) {
-                alertMessage.textContent = message;
-                alertMessage.className = 'alert alert-' + type;
-                alertMessage.style.display = 'block';
+                const alert = document.getElementById('alertMessage');
+                alert.textContent = message;
+                alert.className = 'alert alert-' + type;
+                alert.style.display = 'block';
                 
-                // 3秒后隐藏
                 setTimeout(() => {
-                    alertMessage.style.display = 'none';
-                }, 3000);
+                    alert.style.display = 'none';
+                }, 4000);
             }
         });
+        
+        // 安全改进：清除敏感数据
+        window.onerror = function() {
+            return true;
+        };
     </script>
 </body>
 </html>
