@@ -655,9 +655,31 @@
             alert(`收入报告\n总记录: ${incomeData.length}条\n累计收入: ¥${total.toFixed(2)}`);
         }
         
-        // 添加收入（演示）
+        // 添加收入
         function addIncome() {
-            alert('添加收入功能开发中...');
+            const amount = prompt('请输入收入金额（元）:', '0');
+            if (amount === null || isNaN(amount) || parseFloat(amount) <= 0) {
+                alert('请输入有效的金额');
+                return;
+            }
+            
+            const source = prompt('请输入收入来源（如：GitHub Sponsors、PyPI等）:', '其他');
+            if (source === null) return;
+            
+            const today = new Date().toLocaleDateString('zh-CN');
+            const incomeData = JSON.parse(localStorage.getItem('incomeData') || '[]');
+            
+            incomeData.unshift({
+                date: today,
+                source: source || '其他',
+                amount: parseFloat(amount),
+                status: 'completed'
+            });
+            
+            localStorage.setItem('incomeData', JSON.stringify(incomeData));
+            
+            alert(`✅ 成功添加收入：¥${parseFloat(amount).toFixed(2)}\n来源：${source}`);
+            loadDashboardData();
         }
         
         // 退出登录
