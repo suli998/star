@@ -255,6 +255,7 @@
             font-weight: 500;
             text-align: left;
             line-height: 1.6;
+            display: none;
         }
         
         .alert-success { 
@@ -423,13 +424,16 @@
             
             // 忘记密码功能
             function showForgotPassword() {
-                const alert = document.getElementById('alertMessage');
-                alert.innerHTML = '🔐 <strong>忘记密码？</strong><br><br>这是一个演示系统，密码无法重置。<br><br>演示账号：<code>admin</code> / <code>admin123</code>';
-                alert.className = 'alert alert-success';
-                alert.style.display = 'block';
+                console.log('showForgotPassword called');
+                const alertBox = document.getElementById('alertMessage');
+                alertBox.innerHTML = '🔐 <strong>忘记密码？</strong><br><br>这是一个演示系统，密码无法重置。<br><br>演示账号：<code>admin</code> / <code>admin123</code>';
+                alertBox.className = 'alert alert-success';
+                alertBox.style.display = 'block';
+                alertBox.style.visibility = 'visible';
+                alertBox.style.opacity = '1';
                 
                 setTimeout(() => {
-                    alert.style.display = 'none';
+                    alertBox.style.display = 'none';
                 }, 8000);
             }
         });
